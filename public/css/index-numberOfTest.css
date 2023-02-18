@@ -1,0 +1,92 @@
+.numberOfTests {
+    position: absolute;
+    height: fit-content;
+    width: 80vw;
+    top: 32vh;
+    left: 9vw;
+    margin-top: 20px;
+}
+
+.listOfTests > li{
+    display: inline-block;
+    padding: 5px 10px;
+    height: 100%;
+    width: 100%;
+    max-width: 370px;
+}
+
+.test {
+    position: relative;
+    border: 3px solid #3D7340BF;
+    margin: 10px 20px 0px 20px;
+    border-radius: 4px;
+    padding: 10px;
+    font-weight: 500;
+}
+
+.test-ul {
+    color: #763F5D;
+}
+
+.test-ul li:first-of-type{
+    border-bottom: 1px solid #3D7340BF;
+    text-align: center;
+}
+
+.test-ul li {
+    position: relative;
+    padding: 10px;
+
+}
+
+.test-button {
+    position: relative;
+    text-align: left;
+    padding: 0 1% 0 1%;
+    height: 30%;
+    width: 100%;
+    color: #763F5D;
+    border: 2px solid #926D4E;
+    border-radius: 4px;
+    margin-top: 40px;
+    background: none;
+    margin-right: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.test-button:not(:only-child):last-child {
+    max-height: 24px;
+    max-width: 24px;
+    border: none;
+    margin-top: 45px;
+}
+
+.test-button:hover {
+    background: #a68a56;
+    color: #3E4F6E;
+}
+
+.test-button:active {
+    transition: all 0.05s ease-in-out;
+    background: rgba(166, 138, 86, 0.5);
+}
+
+.test-form {
+    display: flex;
+}
+
+.addNewTest {
+    max-width: 310px;
+    max-height: 158px;
+}
+
+.AddnewTest {
+    border: none;
+    max-width: 120px;
+}
+
+@media (max-width: 1500px) {
+    .numberOfTests {
+        top: 50vh;
+    }
+}
