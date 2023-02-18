@@ -1,0 +1,45 @@
+{% block header %}
+    {% set isLoged = true  %}
+<header class="montserrat">
+    <a class="logo" href="{{ path('mainPage') }}">
+        <img class="logo-img img" src="{{ asset('img/logo.png') }}" alt="">
+    </a>
+    <div class="links">
+        {% if isLoged == true %}
+        <a href="{{ path('cab') }}">
+        <label class="links-label" for="account">
+            <img class="links-img img" id="account" src="{{  asset('/img/user.png')}}" alt="">
+            Корниенко Максим
+        </label>
+        </a>
+        {% endif %}
+        <a href="{{ path('about') }}">
+            <label class="links-label" for="about">
+                <img class="links-img img" id="about" src="{{ asset('img/about.png') }}" alt="">
+                О нас
+            </label>
+        </a>
+        {% if isLoged != true %}
+            <a href="{{ path('auth') }}">
+                <label class="links-label" for="account">
+                    <img class="links-img img" id="account" src="{{ asset('img/exit.png') }}" alt="">
+                    Войти
+                </label>
+            </a>
+        {% endif %}
+        {% if isLoged != true %}
+            <a href="{{ path('auth') }}">
+                <label class="links-label" for="account">
+                    <img class="links-img img" id="account" src="{{ asset('img/exit.png') }}" alt="">
+                    Войти
+                </label>
+            </a>
+        {% endif %}
+    </div>
+</header>
+<div class="title bottom-line montserrat">
+    <h1>
+        {{ title }}
+    </h1>
+</div>
+{% endblock %}
