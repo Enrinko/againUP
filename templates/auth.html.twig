@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <title>Вход регистрация</title></head>
 <body>
-<div class="logo"><img src="img/logo.png" class="logo-img img"></img></div>
+<div class="logo"><img src="{{ asset('img/logo.png') }}" class="logo-img img" alt=""></img></div>
 <div class="login"><span class="title"></span>
     <form action="" method="post"><input type="text" name="username" placeholder="Логин" class="field text">
         <input type="hidden" name="type" value="">
@@ -15,7 +15,7 @@
         <input type="submit" value="" class="field text">
     </form>
     <div class="bottom-title text">
-        <a href="login.php?type=" class="link">
+        <a href="{{ path('auth') }}" class="link">
         </a>
     </div>
 </div>

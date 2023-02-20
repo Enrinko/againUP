@@ -3,35 +3,11 @@
 <head>
     <meta charset='UTF-8'>
     <title>Тесты всё ок</title>
-    <link href='{{ asset('css/index-numberOfTest.css') }}' rel='stylesheet'/>
     <link href="{{ asset('css/header.css') }}" rel="stylesheet"/>
 </head>
 <body>
 <div class="wrapper">
     {{ block('header', '_header.html.twig') }}
-    <ul class="listOfTests">
-        <li class="newTest">
-            <div class="test montserrat">
-                <ul class="test-ul">
-                    <li class="subject">Предмет</li>
-                    <li class="theme">Тема теста</li>
-                    <li class="score">1 из 1</li>
-                </ul>
-                <form class="test-form">
-                    <button type="button"
-                            class="test-button text goToTest">Пройти тест
-                    </button>
-                    <button type="button"
-                            class="test-button needToCheck"><img src="{{ asset('img/edit.png') }}" class="img" alt=""></button>
-                </form>
-            </div>
-        </li>
-        <li class="AddnewTest needToCheck">
-            <div>
-                <button class="addTest"><img src="{{ asset('img/addNewTest.png') }}" class="img addNewTest" alt=""></button>
-            </div>
-        </li>
-    </ul>
 </div>
 </body>
 </html>
