@@ -4,6 +4,7 @@ header {
     height: 100cqw;
     max-height: 101px;
     width: 100cqw;
+    box-sizing: border-box;
     background: linear-gradient(180deg, rgba(38, 38, 38, 0.2) 0%, rgba(132, 217, 138, 0.1) 87.45%), #3D7340;
     position: fixed;
     display: flex;
@@ -35,25 +36,25 @@ header {
     justify-content: space-between;
     gap: 10px;
     justify-self: right;
-    font-size: clamp(14px, 1cqi, 24px);
+    max-height: 40px;
 }
 
-.links *{
-    color: white;
-}
-
-.title {
+.bread {
     position: relative;
-    margin: 121px 150px 20px 200px;
+    margin-top: 121px;
+    margin-left: clamp(50px, 10cqw, 150px);
+    margin-right: clamp(50px, 10cqw, 200px);
+    margin-bottom: 20px;
+    min-width: 200px;
 }
 
-.title h1 {
+.bread span {
     margin: 5px 50px;
     color: #3D7340BF;
 }
 
 .bottom-line {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #606760;
 }
 
 header defs > * {
@@ -66,6 +67,7 @@ header defs > * {
     align-items: center;
     align-content: space-between;
     gap: 5px;
+    color: #FFFFFF;
 }
 
 .links-label > svg, .links-label > svg > use {
@@ -73,9 +75,15 @@ header defs > * {
     height: 38px;
 }
 
-.links-label:hover svg {
-    fill: #84D98A;
+a:hover #cab {
     stroke: #84D98A;
+    transition: all .3s ease;
+}
+
+a:hover svg:not(#cab) * {
+    fill: #84D98A;
+    stroke: none;
+    transition: all .3s ease;
 }
 
 @media screen and (max-width: 1080px) {
@@ -86,6 +94,8 @@ header defs > * {
     }
 
     .logo {
+        width: 80px;
+        height: 64px;
         left: 37%;
         justify-self: center;
         top: 10%;
@@ -100,11 +110,12 @@ header defs > * {
         top: 50px;
         gap: 10px;
         justify-content: center;
+        flex-wrap: wrap;
         margin-left: 10px;
     }
 
-    .title {
-        position: relative;
-        margin: 21px 150px 20px 200px;
+    .bread {
+        margin-top: 21px;
     }
+
 }
