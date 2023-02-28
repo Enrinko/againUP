@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Tests;
+use App\Entity\TestsOfUser;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Service\MyValidator;
@@ -18,12 +20,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class SiteController extends AbstractController
 {
     public LoggerInterface $logger;
-    public SetUser $setUser;
+    public EntityManagerInterface $manager;
 
-    public function __construct(LoggerInterface $logger, SetUser $setUser)
+    public function __construct(LoggerInterface $logger, EntityManagerInterface $manager)
     {
         $this->logger = $logger;
-        $this->setUser = $setUser;
+        $this->manager = $manager;
     }
     #[Route('/', name: "mainPage")]
     public function index(): Response
@@ -78,10 +80,17 @@ class SiteController extends AbstractController
     public function userCab(): Response
     {
         $array = [
+            'username' => $this->getUser()->getUserIdentifier(),
+            'role' => $this->getUser()->getRoles()[0],
+            'course' => $this->isGranted('ROLE_PREMIUM')? 'TechLand Plus' : 'TechLand Base',
             'layers' => 1,
             'links' => [
                 'Главная' => "path('mainPage')"
             ],
+            'tests' => $this->manager->getRepository(TestsOfUser::class)
+                    ->count(['User' => $this->getUser()])
+                .'/'.
+                $this->manager->getRepository(Tests::class)->count(['id' => '?']),
             'this' => 'Личный кабинет',
             'isBought' => false,
             'isLoged' => false
@@ -119,7 +128,7 @@ class SiteController extends AbstractController
     }
 
     #[Route(path: '/login', name: 'login', methods: ['GET', 'POST'])]
-    public function login(Request $request, PublicForm $userForm, MyValidator $validator): Response
+    public function login(Request $request, PublicForm $userForm): Response
     {
         $form = $userForm->create(RegistrationFormType::class);
         $errors = "";

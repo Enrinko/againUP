@@ -19,7 +19,7 @@ class Questions
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    private ?answers $answer_id = null;
+    private ?Answers $answer_id = null;
 
     public function getId(): ?int
     {

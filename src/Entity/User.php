@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -10,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+#[UniqueEntity(fields: ['username'], message: 'Аккаунт с таким именем уже существует')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -29,6 +31,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: TestsOfUser::class, orphanRemoval: true)]
+    private Collection $testsOfUsers;
+
+    public function __construct()
+    {
+        $this->testsOfUsers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -88,5 +98,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, TestsOfUser>
+     */
+    public function getTestsOfUsers(): Collection
+    {
+        return $this->testsOfUsers;
+    }
+
+    public function addTestsOfUser(TestsOfUser $testsOfUser): self
+    {
+        if (!$this->testsOfUsers->contains($testsOfUser)) {
+            $this->testsOfUsers->add($testsOfUser);
+            $testsOfUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTestsOfUser(TestsOfUser $testsOfUser): self
+    {
+        if ($this->testsOfUsers->removeElement($testsOfUser)) {
+            // set the owning side to null (unless already changed)
+            if ($testsOfUser->getUser() === $this) {
+                $testsOfUser->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

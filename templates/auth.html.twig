@@ -21,8 +21,7 @@
 </div>
 <div class="login">
     <span class="title">{{ title }}</span>
-    {{ errors }}
-    {{ form_start(form, {'method': method}) }}
+    {{ form_start(form) }}
         {{ form_errors(form) }}
         {{ form_row(form.username) }}
         {{ form_row(form.password) }}

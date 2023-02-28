@@ -24,7 +24,7 @@ security:
                 check_path: login
                 default_target_path: mainPage
                 username_parameter: "registration_form[username]"
-                password_parameter: "registration_form[username]"
+                password_parameter: "registration_form[password]"
             logout:
                 path: logout
                 target: mainPage

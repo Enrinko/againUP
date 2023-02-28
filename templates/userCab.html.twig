@@ -21,18 +21,6 @@
                     <span>
                         {{ role }}
                     </span>
-                    <span>
-                        {{ course }}
-                    </span>
-                    <span>
-                        {{ lectures }}
-                    </span>
-                    <span>
-                        {{ tests }}
-                    </span>
-                    <button href="{{ path('logout') }}">
-                        Выйти из аккаунта
-                    </button>
                     {% if is_granted('ROLE_ADMIN') %}
                     <button href="{{ path('admin') }}">
                         Выйти из аккаунта
@@ -41,8 +29,16 @@
                 </div>
                 <div class="col">
                     <span>
-
+                        {{ course }}
                     </span>
+                    <span>
+                        {{ tests }}
+                    </span>
+                    <form action="{{ path('logout') }}">
+                        <button >
+                            Выйти из аккаунта
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
