@@ -1,0 +1,6 @@
+.info {
+    margin-left: clamp(50px, 10cqw, 150px);
+    margin-right: clamp(50px, 10cqw, 200px);
+    font-size: clamp(20px, 1cqi, 36px);
+    line-height: 150%;
+}

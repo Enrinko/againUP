@@ -4,8 +4,13 @@
     font-family: 'Montserrat';
     font-style: normal;
     color: white !important;
-    font-size: 24px;
+    font-size: clamp(14px, 1cqi, 24px);
     font-weight: 700;
+}
+
+.darkText {
+    font-weight: 400;
+    color: #000000;
 }
 
 .wrapper {
@@ -24,25 +29,26 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    transition: all .3s ease;
 }
 
 .button:active {
     transition: all 0.1s ease-in-out;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
 }
 
 body {
     overflow: auto;
+    overflow-x: hidden;
 }
 
 a {
     text-decoration: none;
+    box-sizing: content-box;
 }
 
-a:hover > label {
+a:hover > * {
     color: #84D98A;
-    transition: all 0.5s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 ul {

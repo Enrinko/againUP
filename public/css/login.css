@@ -32,62 +32,45 @@ body {
 }
 
 .title {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 700;
     position: relative;
     color: #262626;
     width: 120px;
     height: 55px;
     font-size: 2em;
     line-height: 55px;
-    left: 34%;
+    left: 15%;
 }
 
-.field {
-    box-sizing: border-box;
-    position: relative;
-    width: 384px;
-    height: 74px;
+.form-floating input {
     background: #ffffff;
     border: 3px solid rgba(61, 115, 64, 0.75);
-    border-radius: 15px;
     color: rgba(38, 40, 64, 0.5);
     text-indent: 30px;
     outline: none;
-
-    margin-top: 50px;
+}
+.form-floating:first-of-type input {
+    border-radius: 15px 15px 0 0;
 }
 
-.field:focus {
-    transition: all 0.05s ease-in-out;
+.form-floating:not(:first-of-type) input {
+    border-radius: 0 0 15px 15px;
+}
+
+.form-floating input:focus {
     border-color: #a68a56;
 }
 
-.field[type=submit] {
-    position: relative;
-
-    width: 230px;
-    height: 85px;
-    text-indent: 0px;
-    line-height: 33px;
+.login button[type=submit] {
     color: #ffffff;
-
-    margin-top: 50px;
-    margin-left: 75px;
-
-    border: none;
     background: #3D7340;
     border-radius: 15px;
-
-    transition: all 0.2s ease;
 }
 
-.field[type=submit]:hover {
+.login button[type=submit]:hover {
     background: #a68a56;
 }
 
-.field[type=submit]:active {
+.login button[type=submit]:active {
     transition: all 0.05s ease-in-out;
     background: rgba(166, 138, 86, 0.5);
 }
@@ -96,13 +79,6 @@ body {
     display: grid;
     text-align: center;
     margin-top: 50px;
-}
-
-.subtitle {
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 30px;
-    color: rgba(38, 40, 64, 0.5);
 }
 
 .link {
@@ -131,7 +107,6 @@ body {
 
     .title {
         font-size: 25px;
-        left: 150px;
         line-height: 25px;
     }
 

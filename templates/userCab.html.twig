@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset='UTF-8'>
+    <title>Тесты всё ок</title>
+    <link href="{{ asset('css/_header.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/userCab-main.css') }}" rel="stylesheet"/>
+    {{ block('stylesheet', 'auth.html.twig') }}
+    {{ block('javascript', 'auth.html.twig') }}
+</head>
+<body>
+<div class="wrapper montserrat">
+    {{ block('header', '_header.html.twig') }}
+    <div class="main">
+        <div class="container text-center">
+            <div class="row align-items-start">
+                <div class="col">
+                    <span>
+                        {{ username }}
+                    </span>
+                    <span>
+                        {{ role }}
+                    </span>
+                    <span>
+                        {{ course }}
+                    </span>
+                    <span>
+                        {{ lectures }}
+                    </span>
+                    <span>
+                        {{ tests }}
+                    </span>
+                    <button href="{{ path('logout') }}">
+                        Выйти из аккаунта
+                    </button>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <button href="{{ path('admin') }}">
+                        Выйти из аккаунта
+                    </button>
+                    {% endif %}
+                </div>
+                <div class="col">
+                    <span>
+
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

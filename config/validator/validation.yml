@@ -1,0 +1,11 @@
+App\Entity\User:
+  properties:
+    username:
+      - NotBlank: ~
+      - Length:
+          min: 2
+          max: 4096
+          minMessage: 'Имя пользователя должно содержать не менее {{ limit }} символов'
+          maxMessage: 'Имя пользователя не должно превышать {{ limit }} символов'
+    password:
+      - NotBlank: ~

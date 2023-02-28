@@ -3,35 +3,69 @@
 <head>
     <meta charset='UTF-8'>
     <title>Тесты всё ок</title>
-    <link href='{{ asset('css/index-numberOfTest.css') }}' rel='stylesheet'/>
-    <link href="{{ asset('css/header.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/_header.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/index-info.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/index-courses.css') }}" rel="stylesheet"/>
 </head>
 <body>
-<div class="wrapper">
+<div class="wrapper montserrat">
     {{ block('header', '_header.html.twig') }}
-    <ul class="listOfTests">
-        <li class="newTest">
-            <div class="test montserrat">
-                <ul class="test-ul">
-                    <li class="subject">Предмет</li>
-                    <li class="theme">Тема теста</li>
-                    <li class="score">1 из 1</li>
-                </ul>
-                <form class="test-form">
-                    <button type="button"
-                            class="test-button text goToTest">Пройти тест
-                    </button>
-                    <button type="button"
-                            class="test-button needToCheck"><img src="{{ asset('img/edit.png') }}" class="img" alt=""></button>
-                </form>
-            </div>
-        </li>
-        <li class="AddnewTest needToCheck">
+    <div class="info darkText">
+        <span>
+            Наша компания TechLand занимается предоставлением обучающего материала и обучению.<br><br>
+            На нашем сайте вы всегда можете найти информацию по языку программирования PHP или же проверить свои знания на имеющихся на сайте тестах
+        </span>
+    </div>
+    <div class="courses darkText">
+        <div class="free">
+            <h1>
+                TechLand Base
+            </h1>
             <div>
-                <button class="addTest"><img src="{{ asset('img/addNewTest.png') }}" class="img addNewTest" alt=""></button>
+            <span>
+                Вы получаете доступ к:
+            </span>
+                <ul>
+                    <li>
+                        Лекциям;
+                    </li>
+                    <li>
+                        Тестам.
+                    </li>
+                </ul>
             </div>
-        </li>
-    </ul>
+            <span class="price">
+                <br>Цена: 0.00 руб
+            </span>
+            <button>
+                Получить
+            </button>
+        </div>
+        <div class="with-price">
+            <h1>
+                TechLand Plus
+            </h1>
+            <div>
+            <span>
+                Вы получаете доступ к:
+            </span>
+                <ul>
+                    <li>
+                        Всё, что и в Base-версии;
+                    </li>
+                    <li>
+                        Доступ к чату с помощником.
+                    </li>
+                </ul>
+            </div>
+            <span class="price">
+                <br>Цена: 500.00 руб
+            </span>
+            <button>
+                Купить
+            </button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

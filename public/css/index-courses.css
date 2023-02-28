@@ -1,0 +1,40 @@
+.courses {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 40px;
+    margin-left: clamp(50px, 10cqw, 200px);
+    margin-right: clamp(50px, 10cqw, 200px);
+}
+
+:is(.free, .with-price) {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #3D7340;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+:is(.free, .with-price) div {
+    line-height: 150%;
+}
+
+.free h1 {
+    color: #3D7340;
+}
+
+.with-price h1 {
+    color: #92754E;
+}
+
+.price {
+    text-align: center;
+}
+
+:is(.free, .with-price) button {
+    border: none;
+    background-color: #3D7340;
+    color: white;
+    border-radius: 10px;
+    margin: 10px 30px;
+    padding: 10px 0;
+}

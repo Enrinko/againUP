@@ -1,3 +1,36 @@
-site:
+mainPage:
     path: /
     controller: App\Controller\SiteController::index
+lectures_list:
+    path: /lecture/list
+    controller: App\Controller\SiteController::lectures_list
+lecture:
+    path: /lecture/{name}
+    controller: App\Controller\SiteController::showLecture
+tests_list:
+    path: /test/list
+    controller: App\Controller\SiteController::tests_list
+test:
+    path: /test/{name}
+    controller: App\Controller\SiteController::showTest
+about:
+    path: /about
+    controller: App\Controller\SiteController::about
+chat:
+    path: /chat
+    controller: App\Controller\SiteController::chat
+cab:
+    path: /userCab
+    controller: App\Controller\SiteController::userCab
+login:
+    path: /login
+    controller: App\Controller\SiteController::login
+reg:
+    path: /reg
+    controller: App\Controller\SiteController::reg
+logout:
+    path: /logout
+    controller: App\Controller\SiteController::logout
+admin:
+    path: /admin
+    controller: App\Controller\AdminController::admin
