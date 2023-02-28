@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Service\MyValidator;
 use App\Service\PublicForm;
+use App\Service\PublicService;
 use App\Service\SetUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
@@ -21,6 +22,7 @@ class SiteController extends AbstractController
 {
     public LoggerInterface $logger;
     public EntityManagerInterface $manager;
+
 
     public function __construct(LoggerInterface $logger, EntityManagerInterface $manager)
     {
@@ -77,11 +79,11 @@ class SiteController extends AbstractController
     }
 
     #[Route('/userCab', name: "cab")]
-    public function userCab(): Response
+    public function userCab(PublicService $service): Response
     {
         $array = [
             'username' => $this->getUser()->getUserIdentifier(),
-            'role' => $this->getUser()->getRoles()[0],
+            'role' => $service->identifyRole(),
             'course' => $this->isGranted('ROLE_PREMIUM')? 'TechLand Plus' : 'TechLand Base',
             'layers' => 1,
             'links' => [

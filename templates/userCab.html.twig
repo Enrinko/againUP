@@ -16,23 +16,23 @@
             <div class="row align-items-start">
                 <div class="col">
                     <span>
-                        {{ username }}
+                        Имя пользователя: {{ username }}
                     </span>
                     <span>
-                        {{ role }}
+                       Ваш статус: {{ role }}
                     </span>
                     {% if is_granted('ROLE_ADMIN') %}
-                    <button href="{{ path('admin') }}">
-                        Выйти из аккаунта
-                    </button>
+                        <button href="{{ path('admin') }}">
+                            Админ панель
+                        </button>
                     {% endif %}
                 </div>
                 <div class="col">
                     <span>
-                        {{ course }}
+                       Ваш курс на сайте: {{ course }}
                     </span>
                     <span>
-                        {{ tests }}
+                        пройдено тестов: {{ tests }}
                     </span>
                     <form action="{{ path('logout') }}">
                         <button >

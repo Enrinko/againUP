@@ -58,7 +58,6 @@ class Tests
 
         return $this;
     }
-
     /**
      * @return Collection<int, TestsOfUser>
      */
