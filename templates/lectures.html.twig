@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ this }}</title>
+    {% block stylesheet %}
+        <link href="{{ asset('css/_header.css') }}" rel="stylesheet"/>
+    {% endblock %}
+</head>
+<body>
+<div class="wrapper montserrat">
+    {{ block('header', '_header.html.twig') }}
+    {% if is_granted('ROLE_EDITOR') %}
+        <a href="{{ path('addLecture') }}">Сделать лекцию</a>
+    {% endif %}
+</div>
+</body>
+</html>

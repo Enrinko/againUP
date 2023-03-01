@@ -42,7 +42,8 @@ security:
     access_control:
          - { path: ^/userCab, roles: ROLE_USER }
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/edit/(lecture|test)/\d+$, roles: ROLE_EDITOR }
+         - { path: ^/(lecture|test)/edit/\d+$, roles: ROLE_EDITOR }
+         - { path: ^/(lecture|test)/create, roles: ROLE_EDITOR }
          - { path: ^/chat, roles: ROLE_PREMIUM }
 
 when@test:

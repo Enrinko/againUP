@@ -3,7 +3,7 @@
         <a class="logo" href="{{ path('mainPage') }}">
             <img class="logo-img img" src="{{ asset('img/logo.png') }}" alt="">
         </a>
-        <div class="links">
+        <div class="links a">
             {% if is_granted('IS_AUTHENTICATED') %}
                 <a href="{{ path('cab') }}">
                     <label class="links-label" for="cab">
@@ -71,11 +71,6 @@
         </div>
     </header>
     <div class="bread bottom-line montserrat">
-        <span>
-            {% for name, link in links%}
-                <a href="{{ link }}">{{ name }}</a> >
-            {% endfor %}
-            {{ this }}
-        </span>
+        {{ wo_render_breadcrumbs({separator: '>'}) }}
     </div>
 {% endblock %}

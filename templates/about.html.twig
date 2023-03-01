@@ -2,22 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ this }}</title>
     {% block stylesheet %}
     <link href="{{ asset('css/about.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/_header.css') }}" rel="stylesheet"/>
     {% endblock %}
 </head>
 <body>
-{{ block('header', '_header.html.twig') }}
-<div class="title text"> О нас</div>
-<div class="about text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Arcu est bibendum volutpat nibh sit.
-    Elit vitae ac nec egestas fames cum diam ipsum. Velit, amet, vitae pellentesque hac semper rhoncus adipiscing nulla
-    vulputate. Amet integer a a volutpat. Vel in sed aenean pretium cursus ultrices. Accumsan molestie sollicitudin quam
-    convallis venenatis. Elit urna egestas mi urna mattis nunc commodo. Lorem risus sit cras facilisi viverra. Odio
-    lorem molestie in velit molestie integer urna, sit. Maecenas sit suspendisse volutpat id amet donec ac. Pulvinar
-    viverra quisque elementum elementum cras urna in sit. Magnis vitae at iaculis quam non. Facilisi laoreet sed urna
-    enim sagittis quam fringilla. Vel non netus mattis venenatis. Sed nulla auctor proin lacus, ultrices.
+<div class="wrapper montserrat">
+    {{ block('header', '_header.html.twig') }}
+    <div class="container about text-left darkText">
+        <h1 class="about-header">
+            TechLand
+        </h1>
+        <span class="about-body">
+            <span>
+            Компания TechLand была основана в 2023 году и с того времени ведёт свою образовательная деятельность.<br><br>
+            Мы преследуем следующие цели:
+            </span>
+            <ul>
+                <li>
+                  Распространить как можно большему количеству людей знания о языке программирования PHP
+                </li>
+                <li>
+                  Повысить образованность программистов
+                </li>
+            </ul>
+            <br>
+            Наша компания планирует развиваться в следующих направлениях:
+            <ul>
+                <li>
+                  Расшириться в большее количество языков и затронуть как можно больший объём информации
+                </li>
+                <li>
+                  Предоставить массам возможность понять программирование
+                </li>
+            </ul>
+        </span>
+        <br>
+        <div class="bottom-line"></div>
+        <h1 class="about-header">
+            Контакты
+        </h1>
+        <span class="about-body">
+           Номер телефона: +79999999999<br>
+           Адрес электронной почты: techland.ru@work.com<br>
+        </span>
+        </div>
 </div>
 </body>
 </html>

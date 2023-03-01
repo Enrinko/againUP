@@ -2,27 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="css/test.css" rel="stylesheet"/>
-    <link href="css/header.css" rel="stylesheet"/>
-    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <script defer src="js/outputTest.js"></script>
+    <title>{{ this }}</title>
+    {% block stylesheet %}
+        <link href="{{ asset('css/_header.css') }}" rel="stylesheet"/>
+    {% endblock %}
 </head>
 <body>
-<form method="get">
-    <div class="outputTest text">
-        <div class="outputSubject"><span class="subjectText">Предмет</span></div>
-        <div class="outputTheme"><span class="themeText">SDSDSDSD</span></div>
-        <div class="outputQuestion">
-            <div class="question"><span class="questionText"></span>
-                <input type="hidden" name="checkbox[question]" class="hidden"></div>
-            <div class="questionAnswers">
-                <div class="answer"><input type="checkbox" name="checkbox[answer]" class="checkedOrNot"><label
-                            class="answerText"></label></div>
-            </div>
-        </div>
-    </div>
-    <div class="actions text"><input class="save text"  type="submit" value="Сохранить"></div>
-    <input type="hidden" name="theme" value=""></form>
+<div class="wrapper montserrat">
+    {{ block('header', '_header.html.twig') }}
+</div>
 </body>
 </html>

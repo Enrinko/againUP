@@ -4,7 +4,7 @@ namespace App\Service;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class PublicService extends AbstractController
+class IdentifyService extends AbstractController
 {
     public function identifyRole() {
         switch ($this->getUser()->getRoles()[0]) {
