@@ -39,9 +39,9 @@
             </div>
             <div class="row align-items-start">
                 {% if is_granted('ROLE_ADMIN') %}
-                <div class="col">
+                <div class="col m m-5">
                     <form action="{{ path('admin') }}">
-                        <button>
+                        <button class="btn btn-light btn-outline-primary btn-lg">
                             Админ панель
                         </button>
                     </form>

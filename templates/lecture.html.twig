@@ -5,11 +5,20 @@
     <title>{{ this }}</title>
     {% block stylesheet %}
         <link href="{{ asset('css/_header.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/lecture-main.css') }}" rel="stylesheet"/>
     {% endblock %}
 </head>
 <body>
 <div class="wrapper montserrat">
     {{ block('header', '_header.html.twig') }}
+    <div class="main">
+        <h1>
+            {{ lecture.name }}
+        </h1>
+        <span>
+            {{ lecture.content }}
+        </span>
+    </div>
 </div>
 </body>
 </html>

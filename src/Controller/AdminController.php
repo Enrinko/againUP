@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Lectures;
 use App\Form\LectureFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs;
@@ -25,12 +27,19 @@ class AdminController extends AbstractController
     }
 
     #[Route('/lecture/create', name:'addLecture')]
-    public function createLecture(Breadcrumbs $breadcrumbs): Response
+    public function createLecture(EntityManagerInterface $manager, Request $request, Breadcrumbs $breadcrumbs): Response
     {
-        $user = new Lectures();
-        $form = $this->createForm(LectureFormType::class, $user);
+        $lectures = new Lectures();
+        $form = $this->createForm(LectureFormType::class, $lectures);
         $links = ['Главная' => "/", 'Лекции' => "/lecture/list", 'Создать лекцию' => ""];
         $this->createBreadcrumb($links, $breadcrumbs);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $lectures = $form->getData();
+            $manager->persist($lectures);
+            $manager->flush();
+            return $this->redirectToRoute('lectures_list');
+        }
         $array = [
             'form' => $form,
             'this' => 'Создать лекцию',

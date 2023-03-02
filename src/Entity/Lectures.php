@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\LecturesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: LecturesRepository::class)]
+#[UniqueEntity(fields: ['name'], message: 'Такая лекция уже существует')]
 class Lectures
 {
     #[ORM\Id]
