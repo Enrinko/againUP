@@ -16,9 +16,6 @@ test:
 about:
     path: /about
     controller: App\Controller\SiteController::about
-chat:
-    path: /chat
-    controller: App\Controller\SiteController::chat
 cab:
     path: /userCab
     controller: App\Controller\SiteController::userCab

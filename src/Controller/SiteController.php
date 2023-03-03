@@ -92,15 +92,6 @@ class SiteController extends AbstractController
         return $this->render('about.html.twig', $array);
     }
 
-    #[Route('/chat', name: "chat")]
-    public function chat(Breadcrumbs $breadcrumbs): Response
-    {
-        $links = ['Главная' => "/", 'Чат' => ""];
-        $this->createBreadcrumb($links, $breadcrumbs);
-        $array = ['this' => 'Лекция',];
-        return $this->render('chat.html.twig', $array);
-    }
-
     #[Route('/userCab', name: "cab")]
     public function userCab(IdentifyService $service, Breadcrumbs $breadcrumbs): Response
     {
