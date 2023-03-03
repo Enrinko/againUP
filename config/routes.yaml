@@ -5,7 +5,7 @@ lectures_list:
     path: /lecture/list
     controller: App\Controller\SiteController::lectures_list
 lecture:
-    path: /lecture/{name}
+    path: /lecture/{id}
     controller: App\Controller\SiteController::showLecture
 tests_list:
     path: /test/list
@@ -34,3 +34,15 @@ logout:
 admin:
     path: /admin
     controller: App\Controller\AdminController::admin
+createLecture:
+    path: /lecture/create
+    controller: App\Controller\AdminController::createLecture
+editLecture:
+    path: /lecture/edit/{id}
+    controller: App\Controller\AdminController::editLecture
+addTest:
+    path: /test/create
+    controller: App\Controller\AdminController::createTest
+editTest:
+    path: /test/edit/{id}
+    controller: App\Controller\AdminController::editTest

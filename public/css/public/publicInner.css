@@ -42,27 +42,11 @@ body {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: none !important;
     box-sizing: content-box;
 }
 
 a:hover > * {
     color: #84D98A;
     transition: all .3s ease-in-out;
-}
-
-ul {
-    list-style: none;
-}
-
-
-input::placeholder {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    color: rgba(38, 38, 38, 0.5);
-}
-
-input:focus {
-    outline: none;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Tests;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -11,7 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 
-class RegistrationFormType extends AbstractType
+class TestFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -25,14 +26,6 @@ class RegistrationFormType extends AbstractType
                     'class' => 'form-floating',
                 ],
             ])
-            ->add('password', PasswordType::class, [
-                'label' => 'Пароль',
-                'attr' => ['autocomplete' => 'new-password', 'placeholder' => 'Пароль',],
-                'row_attr' => [
-                    'class' => 'form-floating',
-                ],
-            ])
-            ->add('captcha', ReCaptchaType::class, [])
             ->add('save', SubmitType::class, [
                 'label' => 'Сохранить'
             ]);
@@ -41,10 +34,10 @@ class RegistrationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Tests::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
-            'csrf_token_id' => 'just_LogIn',
+            'csrf_token_id' => 'AND-there-test',
         ]);
     }
 }

@@ -1,18 +1,14 @@
 .main {
     margin: 10cqh 10cqw;
-    background-color: #000;
-    width: 80vw;
-    height: 100vh;
+    background-color: #F2F2F2;
 }
 
 .col {
-    width: fit-content;
-    height: fit-content;
     display: grid;
-    padding: 50px;
     container-type: size;
 }
 
-.col > * {
-    margin-bottom: 2cqh;
+.row > * {
+    padding-bottom: 30px;
+    padding-top: 30px;
 }

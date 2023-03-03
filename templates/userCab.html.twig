@@ -2,7 +2,7 @@
 <html lang="">
 <head>
     <meta charset='UTF-8'>
-    <title>Тесты всё ок</title>
+    <title>{{ this }}</title>
     <link href="{{ asset('css/_header.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/userCab-main.css') }}" rel="stylesheet"/>
     {{ block('stylesheet', 'auth.html.twig') }}
@@ -11,31 +11,45 @@
 <body>
 <div class="wrapper montserrat">
     {{ block('header', '_header.html.twig') }}
-    <div class="main">
+    <div class="container main darkText border-top">
         <div class="container text-center">
             <div class="row align-items-start">
                 <div class="col">
                     <span>
                         Имя пользователя: {{ username }}
                     </span>
-                    <span>
-                       Ваш статус: {{ role }}
-                    </span>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <button href="{{ path('admin') }}">
-                            Админ панель
-                        </button>
-                    {% endif %}
                 </div>
                 <div class="col">
                     <span>
                        Ваш курс на сайте: {{ course }}
                     </span>
+                </div>
+            </div>
+            <div class="row align-items-start">
+                <div class="col">
+                    <span>
+                       Ваш статус: {{ role }}
+                    </span>
+                </div>
+                <div class="col">
                     <span>
                         пройдено тестов: {{ tests }}
                     </span>
+                </div>
+            </div>
+            <div class="row align-items-start">
+                {% if is_granted('ROLE_ADMIN') %}
+                <div class="col m m-5">
+                    <form action="{{ path('admin') }}">
+                        <button class="btn btn-light btn-outline-primary btn-lg">
+                            Админ панель
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+                <div class="col m m-5">
                     <form action="{{ path('logout') }}">
-                        <button >
+                        <button class="btn btn-light btn-outline-danger btn-lg">
                             Выйти из аккаунта
                         </button>
                     </form>
