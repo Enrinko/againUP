@@ -6,10 +6,14 @@
     {% block stylesheet %}
         <link href="{{ asset('css/_header.css') }}" rel="stylesheet"/>
         <link href="{{ asset('css/lecture_list-main.css') }}" rel="stylesheet"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+              crossorigin="anonymous">
     {% endblock %}
     {% block javascript %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     {% endblock %}
 </head>
 <body>
@@ -18,15 +22,43 @@
     <div class="main">
         <ul>
             {% if is_granted('ROLE_EDITOR') %}
-            <li class="list-group-item">
+                <li class="list-group-item">
                     <a href="{{ path('addLecture') }}">Сделать лекцию</a>
-            </li>
+                </li>
             {% endif %}
             {% for key, lecture in lectures %}
                 <li class="lecture border list-group-item">
                     <a href="{{ path('lecture', {id: lecture.id}) }}">
                         {{ lecture.name }}
                     </a>
+                    <div class="actions float-end ">
+                        {% if is_granted('ROLE_EDITOR') %}
+                            <form action="{{ path('editLecture', {id: lecture.id}) }}">
+                                <button class="button-edit" type="submit">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path d="M18 10L21 7L17 3L14 6M18 10L8 20H4V16L14 6M18 10L14 6" stroke="#ffffff"
+                                                  stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </form>
+                            <form action="{{ path('deleteLecture', {id: lecture.id}) }}">
+                                <button class="button-delete" type="submit">
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path d="M19 5L5 19M5.00001 5L19 19" stroke-width="1.5"
+                                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
                 </li>
             {% endfor %}
         </ul>

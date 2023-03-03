@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuestionsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,9 +19,17 @@ class Questions
     #[ORM\Column(type: Types::TEXT)]
     private ?string $question = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\OneToMany(mappedBy: 'questions', targetEntity: answers::class, orphanRemoval: true)]
+    private Collection $answers;
+
+    #[ORM\ManyToOne(inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Answers $answer_id = null;
+    private ?Tests $tests = null;
+
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -38,16 +48,47 @@ class Questions
         return $this;
     }
 
-    public function getAnswerId(): ?answers
+    /**
+     * @return Collection<int, answers>
+     */
+    public function getAnswers(): Collection
     {
-        return $this->answer_id;
+        return $this->answers;
     }
 
-    public function setAnswerId(?answers $answer_id): self
+    public function addAnswer(answers $answer): self
     {
-        $this->answer_id = $answer_id;
+        if (!$this->answers->contains($answer)) {
+            $this->answers->add($answer);
+            $answer->setQuestions($this);
+        }
 
         return $this;
     }
+
+    public function removeAnswer(answers $answer): self
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getQuestions() === $this) {
+                $answer->setQuestions(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTests(): ?Tests
+    {
+        return $this->tests;
+    }
+
+    public function setTests(?Tests $tests): self
+    {
+        $this->tests = $tests;
+
+        return $this;
+    }
+
 
 }

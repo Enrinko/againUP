@@ -4,15 +4,9 @@ mainPage:
 lectures_list:
     path: /lecture/list
     controller: App\Controller\SiteController::lectures_list
-lecture:
-    path: /lecture/{id}
-    controller: App\Controller\SiteController::showLecture
 tests_list:
     path: /test/list
     controller: App\Controller\SiteController::tests_list
-test:
-    path: /test/{name}
-    controller: App\Controller\SiteController::showTest
 about:
     path: /about
     controller: App\Controller\SiteController::about
@@ -28,18 +22,30 @@ reg:
 logout:
     path: /logout
     controller: App\Controller\SiteController::logout
+lecture:
+    path: /lecture/{id}
+    controller: App\Controller\SiteController::showLecture
+test:
+    path: /test/{id}
+    controller: App\Controller\SiteController::showTest
 admin:
     path: /admin
     controller: App\Controller\AdminController::admin
 createLecture:
-    path: /lecture/create
+    path: /create/lecture
     controller: App\Controller\AdminController::createLecture
 editLecture:
-    path: /lecture/edit/{id}
+    path: /edit/lecture/{id}
     controller: App\Controller\AdminController::editLecture
+deleteLecture:
+    path: /delete/lecture/{id}
+    controller: App\Controller\AdminController::deleteLecture
 addTest:
-    path: /test/create
+    path: /create/test
     controller: App\Controller\AdminController::createTest
 editTest:
-    path: /test/edit/{id}
+    path: /edit/test/{id}
     controller: App\Controller\AdminController::editTest
+deleteTest:
+    path: /delete/test/{id}
+    controller: App\Controller\AdminController::deleteTest

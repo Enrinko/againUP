@@ -20,6 +20,10 @@ class Answers
     #[ORM\Column]
     private ?bool $isTrue = null;
 
+    #[ORM\ManyToOne(inversedBy: 'answers')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Questions $questions = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +49,18 @@ class Answers
     public function setIsTrue(bool $isTrue): self
     {
         $this->isTrue = $isTrue;
+
+        return $this;
+    }
+
+    public function getQuestions(): ?Questions
+    {
+        return $this->questions;
+    }
+
+    public function setQuestions(?Questions $questions): self
+    {
+        $this->questions = $questions;
 
         return $this;
     }

@@ -84,13 +84,13 @@ header {
 
 a:hover #cab {
     stroke: #84D98A;
-    transition: all .3s ease;
+    transition: all .3s ease-in-out;
 }
 
 a:hover svg:not(#cab) * {
     fill: #84D98A;
     stroke: none;
-    transition: all .3s ease;
+    transition: all .3s ease-in-out;
 }
 
 ol {

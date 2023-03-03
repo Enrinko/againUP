@@ -15,36 +15,24 @@ class Tests
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Questions $questions_id = null;
-
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'tests', targetEntity: TestsOfUser::class, orphanRemoval: true)]
     private Collection $testsOfUsers;
 
+    #[ORM\OneToMany(mappedBy: 'tests', targetEntity: Questions::class, orphanRemoval: true)]
+    private Collection $questions;
+
     public function __construct()
     {
         $this->testsOfUsers = new ArrayCollection();
+        $this->questions = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getQuestionsId(): ?questions
-    {
-        return $this->questions_id;
-    }
-
-    public function setQuestionsId(?questions $questions_id): self
-    {
-        $this->questions_id = $questions_id;
-
-        return $this;
     }
 
     public function getName(): ?string
@@ -82,6 +70,36 @@ class Tests
             // set the owning side to null (unless already changed)
             if ($testsOfUser->getTests() === $this) {
                 $testsOfUser->setTests(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Questions>
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Questions $question): self
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setTests($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Questions $question): self
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getTests() === $this) {
+                $question->setTests(null);
             }
         }
 

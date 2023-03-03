@@ -25,7 +25,9 @@
         {{ form_errors(form) }}
         {{ form_row(form.username) }}
         {{ form_row(form.password) }}
+    {% if toWhere != 'reg' %}
         {{ form_row(form.captcha) }}
+    {% endif %}
         {{ form_row(form.save) }}
     {% if toWhere == 'reg' %}
         <label>
