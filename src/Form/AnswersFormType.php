@@ -24,7 +24,8 @@ class AnswersFormType extends AbstractType
                 ],
             ])
             ->add('isTrue', CheckboxType::class, [
-                'label' => 'Правильный'
+                'label' => 'Правильный',
+                'empty_data' => 'false'
             ]);
     }
 
@@ -32,9 +33,6 @@ class AnswersFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Answers::class,
-            'csrf_protection' => true,
-            'csrf_field_name' => '_token',
-            'csrf_token_id' => 'hereIsAnswer',
         ]);
     }
 }

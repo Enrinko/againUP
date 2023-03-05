@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Questions;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,6 +29,15 @@ class QuestionsFormType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'attr' => [
+                    'class' => 'answers'
+                ]
+            ])
+            ->add('addNewAnswer', ButtonType::class, [
+                'attr' => [
+                    'class' => 'add_item_link_answer btn-secondary',
+                    'mapped' => 'false',
+                ]
             ]);
     }
 

@@ -100,18 +100,18 @@ class AdminController extends AbstractController
         Breadcrumbs $breadcrumbs,
     ): Response
     {
-        $question = new Questions();
-        $answer = new Answers();
         $test = new Tests();
-        $answer->setAnswer('работает');
-        $answer->setIsTrue(true);
-        $question->setQuestion('Ты пидор?');
-        $question->addAnswer($answer);
-        $test->setName('Проверка на пидора');
-        $test->addQuestion($question);
+        $test->setName("");
         $form = $this->createForm(TestFormType::class, $test);
         $links = ['Главная' => "/", 'Тесты' => "/test/list", 'Создать тест' => ""];
         $this->createBreadcrumb($links, $breadcrumbs);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $test = $form->getData();
+            $manager->persist($test);
+            $manager->flush();
+            return $this->redirectToRoute('tests_list');
+        }
         $array = [
             'this' => 'Создать тест',
             'form' => $form,

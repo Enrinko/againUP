@@ -40,7 +40,7 @@ class TestFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Tests::class,
-            'csrf_protection' => true,
+            'csrf_protection' => false,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'AND-there-test',
         ]);

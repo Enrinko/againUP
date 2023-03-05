@@ -15,47 +15,6 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
     {% endblock %}
-    <script>
-        document
-            .querySelectorAll('.add_item_link')
-            .forEach(btn => {
-                btn.addEventListener("click", addFormToCollection)
-            });
-        document
-            .querySelectorAll('ul.questions li')
-            .forEach((tag) => {
-                addTagFormDeleteLink(tag)
-            })
-        const addFormToCollection = (e) => {
-            const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
-
-            const item = document.createElement('li');
-
-            item.innerHTML = collectionHolder
-                .dataset
-                .prototype
-                .replace(
-                    /__name__/g,
-                    collectionHolder.dataset.index
-                );
-
-            collectionHolder.appendChild(item);
-
-            collectionHolder.dataset.index++;
-        };
-        const addTagFormDeleteLink = (item) => {
-            const removeFormButton = document.createElement('button');
-            removeFormButton.innerText = 'Delete this tag';
-
-            item.append(removeFormButton);
-
-            removeFormButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                // remove the li for the tag form
-                item.remove();
-            });
-        }
-    </script>
 </head>
 <body>
 <div class="wrapper montserrat">
@@ -67,8 +26,63 @@
             data-index="{{ form.questions|length > 0 ? form.questions|last.vars.name + 1 : 0 }}"
             data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
         </ul>
-        {{ form_end(form) }}
         <button type="button" class="add_item_link" data-collection-holder-class="questions">Добавить вопрос</button>
+        {{ form_row(form.save) }}
+        {{ form_end(form, {render_rest: false}) }}
+        <script>
+            const addQuestion = document.querySelector('.add_item_link')
+            addQuestion.dataset.collectionHolderClass='questions'
+
+            const newLinkLi = document.createElement('li')
+            document.getElementsByName('test_form').item(0).append(addQuestion)
+
+            const collectionHolder = document.querySelector('ul.questions')
+            collectionHolder.appendChild(addQuestion)
+
+            const addQuestionToCollection = (e) => {
+                const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+                const item = document.createElement('li');
+
+                item.innerHTML = collectionHolder
+                    .dataset
+                    .prototype
+                    .replace(
+                        /__name__/g,
+                        collectionHolder.dataset.index
+                    );
+                collectionHolder.appendChild(item);
+                const addAnswer = item.querySelector('.add_item_link_answer')
+                addAnswer.addEventListener("click", addFormToCollection)
+                addAnswer.dataset.collectionHolderClass = 'answers'
+                addAnswer.innerText = 'Добавить ответ'
+                item.appendChild(addAnswer)
+                item.querySelector('legend.required').innerText =   'Ответы'
+
+                collectionHolder.dataset.index++;
+            }
+
+            const addFormToCollection = (e) => {
+                const collectionHolder = e.target.closest('li').querySelector('.answers')
+
+                const item = document.createElement('li');
+
+                item.innerHTML = collectionHolder
+                    .dataset
+                    .prototype
+                    .replace(
+                        /__name__/g,
+                        collectionHolder.dataset.index
+                    );
+                collectionHolder.appendChild(item);
+                item.querySelector('input.form-check-input').removeAttribute('required')
+                item.querySelector('legend.required').remove()
+
+                collectionHolder.dataset.index++;
+            }
+
+            addQuestion.addEventListener("click", addQuestionToCollection)
+        </script>
     </div>
 </div>
 </body>
