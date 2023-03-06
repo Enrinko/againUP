@@ -21,6 +21,9 @@ class TestsOfUser
     #[ORM\JoinColumn(nullable: false)]
     private ?Tests $tests = null;
 
+    #[ORM\Column]
+    private ?int $score = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -46,6 +49,18 @@ class TestsOfUser
     public function setTests(?Tests $tests): self
     {
         $this->tests = $tests;
+
+        return $this;
+    }
+
+    public function getScore(): ?int
+    {
+        return $this->score;
+    }
+
+    public function setScore(int $score): self
+    {
+        $this->score = $score;
 
         return $this;
     }

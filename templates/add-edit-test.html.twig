@@ -20,13 +20,11 @@
 <div class="wrapper montserrat">
     {{ block('header', '_header.html.twig') }}
     <div class="main">
+        {{ dump(form) }}
         {{ form_start(form) }}
         {{ form_row(form.name) }}
-        <ul class="questions"
-            data-index="{{ form.questions|length > 0 ? form.questions|last.vars.name + 1 : 0 }}"
-            data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
-        </ul>
-        <button type="button" class="add_item_link" data-collection-holder-class="questions">Добавить вопрос</button>
+        {{ form_row(form.questions) }}
+        <button type="button" class="add_item_link btn" data-collection-holder-class="questions">Добавить вопрос</button>
         {{ form_row(form.save) }}
         {{ form_end(form, {render_rest: false}) }}
         <script>
@@ -36,11 +34,11 @@
             const newLinkLi = document.createElement('li')
             document.getElementsByName('test_form').item(0).append(addQuestion)
 
-            const collectionHolder = document.querySelector('ul.questions')
+            const collectionHolder = document.querySelector('.questions')
             collectionHolder.appendChild(addQuestion)
 
-            const addQuestionToCollection = (e) => {
-                const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+            const addQuestionToCollection = () => {
+                const collectionHolder = document.querySelector('.questions');
 
                 const item = document.createElement('li');
 

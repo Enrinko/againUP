@@ -6,6 +6,7 @@ use App\Entity\Answers;
 use App\Entity\Lectures;
 use App\Entity\Questions;
 use App\Entity\Tests;
+use App\Entity\User;
 use App\Form\LectureFormType;
 use App\Form\TestFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,10 +20,24 @@ class AdminController extends AbstractController
 {
     #[Route('/admin', name:'admin')]
     public function admin(
-
+        EntityManagerInterface $manager,
+        Request $request,
+        Breadcrumbs $breadcrumbs
     ): Response
     {
+        $links = ['Главная' => "/", 'Личный кабинет' => "/userCab", 'Админ панель' => ""];
+        $this->createBreadcrumb($links, $breadcrumbs);
+        $array = [
+            'this' => 'Создать лекцию',
+            'users' => $manager->getRepository(User::class)->findAll(),
+            'roles' => [
+                0 => 'ROLE_USER',
+                1 => 'ROLE_EDITOR',
+                2 => 'ROLE_ADMIN',
+            ],
 
+        ];
+        return $this->render('admin.html.twig', $array);
     }
 
     public function createBreadcrumb(
@@ -126,10 +141,18 @@ class AdminController extends AbstractController
         int $id
     ): Response
     {
-        $links = ['Главная' => "/", 'Тесты' => "/test/list", 'Создать тест' => ""];
+        $test = $manager->getRepository(Tests::class)->find($id);
+        $form = $this->createForm(TestFormType::class, $test);
+        $links = ['Главная' => "/", 'Тесты' => "/test/list", 'Отредактировать тест' => ""];
         $this->createBreadcrumb($links, $breadcrumbs);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->flush();
+            return $this->redirectToRoute('tests_list');
+        }
         $array = [
             'this' => 'Создать тест',
+            'form' => $form,
         ];
         return $this->render('add-edit-test.html.twig', $array);
     }

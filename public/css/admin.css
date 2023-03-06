@@ -3,7 +3,3 @@
     margin-right: clamp(50px, 10cqw, 200px);
     color: #000000;
 }
-
-.test-header {
-    margin-left: 45%;
-}

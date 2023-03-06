@@ -30,6 +30,10 @@ class TestFormType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'attr' => [
+                    'class' => 'questions',
+                    'onload' => 'addFormToCollection()'
+                ]
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Сохранить'

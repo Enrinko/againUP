@@ -1,6 +1,8 @@
 <?php namespace App\Controller;
 
+use App\Entity\Answers;
 use App\Entity\Lectures;
+use App\Entity\Questions;
 use App\Entity\Tests;
 use App\Entity\TestsOfUser;
 use App\Entity\User;
@@ -86,6 +88,7 @@ class SiteController extends AbstractController
 
     #[Route('/test/list', name: "tests_list", priority: 1)]
     public function tests_list(
+        EntityManagerInterface $manager,
         Breadcrumbs $breadcrumbs
     ): Response
     {
@@ -93,20 +96,55 @@ class SiteController extends AbstractController
         $this->createBreadcrumb($links, $breadcrumbs);
         $array = [
             'this' => 'Тесты',
+            'tests' => $manager->getRepository(Tests::class)->findAll(),
+            'score' => $manager->getRepository(TestsOfUser::class)->findBy(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]),
             ];
         return $this->render('tests.html.twig', $array);
     }
 
     #[Route('/test/{id}', name: "test")]
     public function showTest
-    (Breadcrumbs $breadcrumbs,
-     int $id
+    (EntityManagerInterface $manager,
+     Request $request,
+    Breadcrumbs $breadcrumbs,
+     int $id,
+    LoggerInterface $logger
     ): Response
     {
         $links = ['Главная' => "/", 'Тесты' => "/test/list", 'Тест' => ""];
         $this->createBreadcrumb($links, $breadcrumbs);
+        $test = $manager->getRepository(Tests::class)->find($id);
+        $query = $request->get('res');
+        $userAndTest = new TestsOfUser();
+        if (sizeof($query) != 0) {
+            $res = $query;
+            $score = 0;
+            $allQuestions = $manager->getRepository(Questions::class)->findBy(['tests' => $id]);
+            foreach ($res as $question => $answers) {
+                foreach ($answers as $answer) {
+                    $true = $manager->getRepository(Answers::class)->find($answer)->isIsTrue();
+                    $score += $true? $answer == '1'? 1 : 0 : 0;
+                }
+            }
+            $count = 0;
+            foreach ($allQuestions as $question) {
+                $allAnswers = $manager->getRepository(Answers::class)->findBy(['questions' => $question->getId()]);
+                foreach ($allAnswers as $answer) {
+                    if ($answer->isIsTrue()) {
+                        $count++;
+                    }
+                }
+            }
+            $userAndTest->setTests($test);
+            $userAndTest->setUser($this->getUser());
+            $userAndTest->setScore(($score / $count) * 5);
+            $manager->persist($userAndTest);
+            $manager->flush();
+            return $this->redirectToRoute('tests_list');
+        }
         $array = [
             'this' => 'Тест',
+            'test' => $test,
             ];
         return $this->render('test.html.twig', $array);
     }
@@ -119,9 +157,6 @@ class SiteController extends AbstractController
         $links = ['Главная' => "/", 'О нас' => ""];
         $this->createBreadcrumb($links, $breadcrumbs);
         $array = [
-            'tests' => $this->manager->getRepository(TestsOfUser::class)->count(['User' => $this->getUser()])
-            . '/' .
-            $this->manager->getRepository(Tests::class)->count(['id' => '?']),
             'this' => 'О нас',
             ];
         return $this->render('about.html.twig', $array);
@@ -129,16 +164,23 @@ class SiteController extends AbstractController
 
     #[Route('/userCab', name: "cab")]
     public function userCab(
-        IdentifyService $service, Breadcrumbs $breadcrumbs
+        IdentifyService $service,
+        Breadcrumbs $breadcrumbs
     ): Response
     {
         $links = ['Главная' => "/", 'Личный кабинет' => ""];
         $this->createBreadcrumb($links, $breadcrumbs);
+        $all = $this->manager->getRepository(Tests::class)->findAll();
+        $count = 0;
+        foreach ($all as $item) {
+            $count++;
+        }
         $array = [
-            'username' => $this->getUser()->getUserIdentifier(), 'role' => $service->identifyRole(),
+            'username' => $this->getUser()->getUserIdentifier(),
+            'role' => $service->identifyRole(),
             'tests' => $this->manager->getRepository(TestsOfUser::class)->count(['User' => $this->getUser()])
-                . '/' .
-                $this->manager->getRepository(Tests::class)->count(['id' => '?']),
+                . '/' .$count,
+                $this->manager->getRepository(Tests::class)->findAll(),
             'this' => 'Личный кабинет',
             ];
         return $this->render('userCab.html.twig', $array);
@@ -150,7 +192,6 @@ class SiteController extends AbstractController
         EntityManagerInterface $entityManager,
         UserPasswordHasherInterface $passwordHasher,
         UserAuthenticatorInterface $authenticator,
-        LoggerInterface $logger
     ): Response
     {
         $user = new User();

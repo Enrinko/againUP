@@ -18,10 +18,10 @@ class Tests
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'tests', targetEntity: TestsOfUser::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'tests', targetEntity: TestsOfUser::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $testsOfUsers;
 
-    #[ORM\OneToMany(mappedBy: 'tests', targetEntity: Questions::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'tests', targetEntity: Questions::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $questions;
 
     public function __construct()

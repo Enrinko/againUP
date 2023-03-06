@@ -5,11 +5,46 @@
     <title>{{ this }}</title>
     {% block stylesheet %}
         <link href="{{ asset('css/_header.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/test-main.css') }}" rel="stylesheet"/>
     {% endblock %}
 </head>
 <body>
 <div class="wrapper montserrat">
     {{ block('header', '_header.html.twig') }}
+    <div class="main">
+        {{ dump(request) }}
+        {{ dump(testUser) }}
+        <h1 class="test-header">
+            {{  test.name }}
+        </h1>
+        <form>
+            {% for key, question in test.questions %}
+                <div class="question">
+                    {{ question.question }}
+                </div>
+                <ul class="answers">
+                    {% for key, answer in question.answers %}
+                        <li>
+                            <input type="checkbox" id="{{ answer.id }}" name="res[{{ question.id }}][{{ answer.id }}]"  value="0">
+                            <label for="{{ answer.id }}">
+                                {{ answer.answer }}
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+            <button type="submit"> Отправить</button>
+        </form>
+    </div>
+
+    <script>
+        const changeValue = (e) => {
+            e.target.setAttribute('value', e.target.getAttribute('value') === '0'? 1 : 0)
+        }
+        document.querySelectorAll('input[type="checkbox"]').forEach(
+            input => input.addEventListener('change', changeValue)
+        )
+    </script>
 </div>
 </body>
 </html>

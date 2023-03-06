@@ -19,7 +19,7 @@ class Questions
     #[ORM\Column(type: Types::TEXT)]
     private ?string $question = null;
 
-    #[ORM\OneToMany(mappedBy: 'questions', targetEntity: answers::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'questions', targetEntity: Answers::class, orphanRemoval: true, cascade: ['persist'])]
     private Collection $answers;
 
     #[ORM\ManyToOne(inversedBy: 'questions')]
@@ -49,14 +49,14 @@ class Questions
     }
 
     /**
-     * @return Collection<int, answers>
+     * @return Collection<int, Answers>
      */
     public function getAnswers(): Collection
     {
         return $this->answers;
     }
 
-    public function addAnswer(answers $answer): self
+    public function addAnswer(Answers $answer): self
     {
         if (!$this->answers->contains($answer)) {
             $this->answers->add($answer);
@@ -66,7 +66,7 @@ class Questions
         return $this;
     }
 
-    public function removeAnswer(answers $answer): self
+    public function removeAnswer(Answers $answer): self
     {
         if ($this->answers->removeElement($answer)) {
             // set the owning side to null (unless already changed)
