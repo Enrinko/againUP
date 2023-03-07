@@ -26,10 +26,19 @@ class AdminController extends AbstractController
     ): Response
     {
         $links = ['Главная' => "/", 'Личный кабинет' => "/userCab", 'Админ панель' => ""];
+        $all = $manager->getRepository(User::class)->findAll();
         $this->createBreadcrumb($links, $breadcrumbs);
+        $query = $request->get('users');
+        if (sizeof($query) != 0) {
+            foreach ($query as $user => $role) {
+                $oldUser = $manager->getRepository(User::class)->findBy(['username' => $user]);
+                $oldUser->setRoles([$role]);
+                $manager->flush();
+            }
+        }
         $array = [
             'this' => 'Создать лекцию',
-            'users' => $manager->getRepository(User::class)->findAll(),
+            'users' => $all,
             'roles' => [
                 0 => 'ROLE_USER',
                 1 => 'ROLE_EDITOR',
@@ -124,29 +133,6 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $test = $form->getData();
             $manager->persist($test);
-            $manager->flush();
-            return $this->redirectToRoute('tests_list');
-        }
-        $array = [
-            'this' => 'Создать тест',
-            'form' => $form,
-        ];
-        return $this->render('add-edit-test.html.twig', $array);
-    }
-    #[Route('/edit/test/{id}', name:'editTest')]
-    public function editTest(
-        EntityManagerInterface $manager,
-        Request $request,
-        Breadcrumbs $breadcrumbs,
-        int $id
-    ): Response
-    {
-        $test = $manager->getRepository(Tests::class)->find($id);
-        $form = $this->createForm(TestFormType::class, $test);
-        $links = ['Главная' => "/", 'Тесты' => "/test/list", 'Отредактировать тест' => ""];
-        $this->createBreadcrumb($links, $breadcrumbs);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
             $manager->flush();
             return $this->redirectToRoute('tests_list');
         }

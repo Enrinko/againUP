@@ -43,9 +43,6 @@ deleteLecture:
 addTest:
     path: /create/test
     controller: App\Controller\AdminController::createTest
-editTest:
-    path: /edit/test/{id}
-    controller: App\Controller\AdminController::editTest
 deleteTest:
     path: /delete/test/{id}
     controller: App\Controller\AdminController::deleteTest

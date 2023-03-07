@@ -24,30 +24,30 @@
             <th>Никнейм</th>
             <th>Роль</th>
         </tr>
-    {% for key, user in users %}
-        <tr>
-            <td>
-                {{ user.username }}
-            </td>
-            <td>
-                <form>
-                    <select name="roles">
-                        <option value="{{ user.roles[0] }}">
-                            {{ user.roles[0] }}
-                        </option>
-                        {% for key, role in roles %}
-                            {% if user.roles[0] != role %}
-                            <option value="{{ role }}">
-                                {{ role }}
+        <form>
+            {% for key, user in users %}
+                <tr>
+                    <td>
+                        {{ user.username }}
+                    </td>
+                    <td>
+                        <select name="users[{{ user.username }}]">
+                            <option value="{{ user.roles[0] }}">
+                                {{ user.roles[0] }}
                             </option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
-                    <button class="btn btn-light btn-outline-primary" type="submit">Сохранить</button>
-                </form>
-            </td>
-        </tr>
-    {% endfor %}
+                            {% for key, role in roles %}
+                                {% if user.roles[0] != role %}
+                                    <option value="{{ role }}">
+                                        {{ role }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+            {% endfor %}
+            <button class="btn btn-light btn-outline-primary" type="submit">Сохранить</button>
+        </form>
     </table>
 </div>
 </body>
