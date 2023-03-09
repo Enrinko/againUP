@@ -31,9 +31,11 @@
                     <a href="{{ path('test', {id: test.id}) }}">
                         {{ test.name }}
                     </a>
+                    {% if score != "" or score.vars.length > key %}
                     <span>
                         {{ score[key].score }} баллов из 5
                     </span>
+                    {% endif %}
                     <div class="actions float-end">
                         {% if is_granted('ROLE_EDITOR') %}
                             <form action="{{ path('deleteTest', {id: test.id}) }}">

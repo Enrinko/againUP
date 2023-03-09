@@ -97,7 +97,7 @@ class SiteController extends AbstractController
         $array = [
             'this' => 'Тесты',
             'tests' => $manager->getRepository(Tests::class)->findAll(),
-            'score' => $manager->getRepository(TestsOfUser::class)->findBy(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]),
+            'score' => $manager->getRepository(TestsOfUser::class)->count(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]) > 0? $manager->getRepository(TestsOfUser::class)->findBy(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]) : "",
             ];
         return $this->render('tests.html.twig', $array);
     }
@@ -116,7 +116,7 @@ class SiteController extends AbstractController
         $test = $manager->getRepository(Tests::class)->find($id);
         $query = $request->get('res');
         $userAndTest = new TestsOfUser();
-        if (sizeof($query) != 0) {
+        if (isset($query)) {
             $res = $query;
             $score = 0;
             $allQuestions = $manager->getRepository(Questions::class)->findBy(['tests' => $id]);

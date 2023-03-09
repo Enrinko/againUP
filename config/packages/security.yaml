@@ -41,7 +41,7 @@ security:
     access_control:
          - { path: ^/userCab, roles: ROLE_USER }
          - { path: ^/(edit|delete|create)/(lecture|test)(|/\d+$), roles: ROLE_EDITOR }
-         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/(admin|user/delete/\d+$), roles: ROLE_ADMIN }
 
 when@test:
     security:

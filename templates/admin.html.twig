@@ -19,18 +19,22 @@
 <body>
 <div class="wrapper montserrat">
     {{ block('header', '_header.html.twig') }}
-    <table class="darkText main">
-        <tr>
-            <th>Никнейм</th>
-            <th>Роль</th>
-        </tr>
-        <form>
+    <form>
+        <button class="btn btn-light btn-outline-primary" type="submit">Сохранить</button>
+
+        <table class="darkText main">
+            <tr>
+                <th>Никнейм</th>
+                <th>Роль</th>
+                <th>Удалить</th>
+            </tr>
             {% for key, user in users %}
                 <tr>
                     <td>
                         {{ user.username }}
                     </td>
                     <td>
+                        {% if user.username != app.user.username %}
                         <select name="users[{{ user.username }}]">
                             <option value="{{ user.roles[0] }}">
                                 {{ user.roles[0] }}
@@ -43,12 +47,32 @@
                                 {% endif %}
                             {% endfor %}
                         </select>
+                            {% else %}
+                            <span>
+                                {{ user.roles[0] }}
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if user.username != app.user.username %}
+                            <form action="{{ path('deleteUser', {id: user.id}) }}">
+                                <button class="button-delete" type="submit">
+                                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                        <g id="SVGRepo_iconCarrier">
+                                            <path d="M19 5L5 19M5.00001 5L19 19" stroke-width="1.5"
+                                                  stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}
-            <button class="btn btn-light btn-outline-primary" type="submit">Сохранить</button>
-        </form>
-    </table>
+        </table>
+    </form>
 </div>
 </body>
 </html>

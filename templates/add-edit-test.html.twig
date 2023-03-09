@@ -20,10 +20,12 @@
 <div class="wrapper montserrat">
     {{ block('header', '_header.html.twig') }}
     <div class="main">
-        {{ dump(form) }}
         {{ form_start(form) }}
         {{ form_row(form.name) }}
-        {{ form_row(form.questions) }}
+        <ul class="questions"
+            data-index="{{ form.questions|length > 0 ? form.questions|last.vars.name + 1 : 0 }}"
+            data-prototype="{{ form_widget(form.questions.vars.prototype)|e('html_attr') }}">
+        </ul>
         <button type="button" class="add_item_link btn" data-collection-holder-class="questions">Добавить вопрос</button>
         {{ form_row(form.save) }}
         {{ form_end(form, {render_rest: false}) }}

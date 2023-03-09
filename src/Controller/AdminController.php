@@ -29,9 +29,9 @@ class AdminController extends AbstractController
         $all = $manager->getRepository(User::class)->findAll();
         $this->createBreadcrumb($links, $breadcrumbs);
         $query = $request->get('users');
-        if (sizeof($query) != 0) {
+        if (isset($query)) {
             foreach ($query as $user => $role) {
-                $oldUser = $manager->getRepository(User::class)->findBy(['username' => $user]);
+                $oldUser = $manager->getRepository(User::class)->findOneBy(['username' => $user]);
                 $oldUser->setRoles([$role]);
                 $manager->flush();
             }
@@ -44,9 +44,18 @@ class AdminController extends AbstractController
                 1 => 'ROLE_EDITOR',
                 2 => 'ROLE_ADMIN',
             ],
-
+            'req' => $request->get('users'),
         ];
         return $this->render('admin.html.twig', $array);
+    }
+    #[Route('/user/delete/{id}', name:'deleteUser')]
+    public function deleteUser(
+        EntityManagerInterface $manager,
+        int $id
+    ) : Response
+    {
+        $manager->getRepository(User::class)->remove($manager->getRepository(User::class)->find($id), true);
+        return $this->redirectToRoute('admin');
     }
 
     public function createBreadcrumb(

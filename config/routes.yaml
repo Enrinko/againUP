@@ -46,3 +46,6 @@ addTest:
 deleteTest:
     path: /delete/test/{id}
     controller: App\Controller\AdminController::deleteTest
+deleteUser:
+    path: /user/delete/{id}
+    controller: App\Controller\AdminController::deleteUser
