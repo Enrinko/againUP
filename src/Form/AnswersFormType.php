@@ -25,7 +25,7 @@ class AnswersFormType extends AbstractType
             ])
             ->add('isTrue', CheckboxType::class, [
                 'label' => 'Правильный',
-                'empty_data' => 'false'
+                'empty_data' => false
             ]);
     }
 

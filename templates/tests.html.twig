@@ -31,7 +31,7 @@
                     <a href="{{ path('test', {id: test.id}) }}">
                         {{ test.name }}
                     </a>
-                    {% if score != "" or score.vars.length > key %}
+                    {% if score != "" or size > key %}
                     <span>
                         {{ score[key].score }} баллов из 5
                     </span>

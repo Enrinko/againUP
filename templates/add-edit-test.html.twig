@@ -36,8 +36,8 @@
             const newLinkLi = document.createElement('li')
             document.getElementsByName('test_form').item(0).append(addQuestion)
 
-            const collectionHolder = document.querySelector('.questions')
-            collectionHolder.appendChild(addQuestion)
+            const collection = document.querySelector('.questions')
+            collection.appendChild(addQuestion)
 
             const addQuestionToCollection = () => {
                 const collectionHolder = document.querySelector('.questions');
@@ -75,6 +75,7 @@
                         collectionHolder.dataset.index
                     );
                 collectionHolder.appendChild(item);
+                item.setAttribute('id', 'answer' + collectionHolder.dataset.index)
                 item.querySelector('input.form-check-input').removeAttribute('required')
                 item.querySelector('legend.required').remove()
 

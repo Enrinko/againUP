@@ -26,36 +26,18 @@ class AdminController extends AbstractController
     ): Response
     {
         $links = ['Главная' => "/", 'Личный кабинет' => "/userCab", 'Админ панель' => ""];
-        $all = $manager->getRepository(User::class)->findAll();
         $this->createBreadcrumb($links, $breadcrumbs);
-        $query = $request->get('users');
-        if (isset($query)) {
-            foreach ($query as $user => $role) {
-                $oldUser = $manager->getRepository(User::class)->findOneBy(['username' => $user]);
-                $oldUser->setRoles([$role]);
-                $manager->flush();
-            }
-        }
         $array = [
             'this' => 'Создать лекцию',
-            'users' => $all,
+            'users' => $manager->getRepository(User::class)->findAll(),
             'roles' => [
                 0 => 'ROLE_USER',
                 1 => 'ROLE_EDITOR',
                 2 => 'ROLE_ADMIN',
             ],
-            'req' => $request->get('users'),
+
         ];
         return $this->render('admin.html.twig', $array);
-    }
-    #[Route('/user/delete/{id}', name:'deleteUser')]
-    public function deleteUser(
-        EntityManagerInterface $manager,
-        int $id
-    ) : Response
-    {
-        $manager->getRepository(User::class)->remove($manager->getRepository(User::class)->find($id), true);
-        return $this->redirectToRoute('admin');
     }
 
     public function createBreadcrumb(
@@ -142,6 +124,30 @@ class AdminController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $test = $form->getData();
             $manager->persist($test);
+            $manager->flush();
+            return $this->redirectToRoute('tests_list');
+        }
+        $array = [
+            'this' => 'Создать тест',
+            'form' => $form,
+            'test' => $test
+        ];
+        return $this->render('add-edit-test.html.twig', $array);
+    }
+    #[Route('/edit/test/{id}', name:'editTest')]
+    public function editTest(
+        EntityManagerInterface $manager,
+        Request $request,
+        Breadcrumbs $breadcrumbs,
+        int $id
+    ): Response
+    {
+        $test = $manager->getRepository(Tests::class)->find($id);
+        $form = $this->createForm(TestFormType::class, $test);
+        $links = ['Главная' => "/", 'Тесты' => "/test/list", 'Отредактировать тест' => ""];
+        $this->createBreadcrumb($links, $breadcrumbs);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager->flush();
             return $this->redirectToRoute('tests_list');
         }

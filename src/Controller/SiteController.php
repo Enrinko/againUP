@@ -92,12 +92,14 @@ class SiteController extends AbstractController
         Breadcrumbs $breadcrumbs
     ): Response
     {
+        $size = $manager->getRepository(TestsOfUser::class)->count(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]);
         $links = ['Главная' => "/", 'Тесты' => ""];
         $this->createBreadcrumb($links, $breadcrumbs);
         $array = [
             'this' => 'Тесты',
             'tests' => $manager->getRepository(Tests::class)->findAll(),
-            'score' => $manager->getRepository(TestsOfUser::class)->count(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]) > 0? $manager->getRepository(TestsOfUser::class)->findBy(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]) : "",
+            'size' => $size,
+            'score' => $size > 0? $manager->getRepository(TestsOfUser::class)->findBy(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]) : "",
             ];
         return $this->render('tests.html.twig', $array);
     }
