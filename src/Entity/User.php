@@ -31,10 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
-
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: TestsOfUser::class, orphanRemoval: true, cascade: ['persist'])]
-    private Collection $testsOfUsers;
-
+	
     public function __construct()
     {
         $this->testsOfUsers = new ArrayCollection();
@@ -98,34 +95,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-    /**
-     * @return Collection<int, TestsOfUser>
-     */
-    public function getTestsOfUsers(): Collection
-    {
-        return $this->testsOfUsers;
-    }
-
-    public function addTestsOfUser(TestsOfUser $testsOfUser): self
-    {
-        if (!$this->testsOfUsers->contains($testsOfUser)) {
-            $this->testsOfUsers->add($testsOfUser);
-            $testsOfUser->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTestsOfUser(TestsOfUser $testsOfUser): self
-    {
-        if ($this->testsOfUsers->removeElement($testsOfUser)) {
-            // set the owning side to null (unless already changed)
-            if ($testsOfUser->getUser() === $this) {
-                $testsOfUser->setUser(null);
-            }
-        }
-
-        return $this;
     }
 }

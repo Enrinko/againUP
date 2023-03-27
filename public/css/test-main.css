@@ -1,9 +1,0 @@
-.main {
-    margin-left: clamp(50px, 10cqw, 150px);
-    margin-right: clamp(50px, 10cqw, 200px);
-    color: #000000;
-}
-
-.test-header {
-    margin-left: 45%;
-}

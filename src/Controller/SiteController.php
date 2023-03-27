@@ -1,10 +1,6 @@
 <?php namespace App\Controller;
 
-use App\Entity\Answers;
 use App\Entity\Lectures;
-use App\Entity\Questions;
-use App\Entity\Tests;
-use App\Entity\TestsOfUser;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Service\IdentifyService;
@@ -86,71 +82,6 @@ class SiteController extends AbstractController
         return $this->render('lecture.html.twig', $array);
     }
 
-    #[Route('/test/list', name: "tests_list", priority: 1)]
-    public function tests_list(
-        EntityManagerInterface $manager,
-        Breadcrumbs $breadcrumbs
-    ): Response
-    {
-        $size = $manager->getRepository(TestsOfUser::class)->count(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]);
-        $links = ['Главная' => "/", 'Тесты' => ""];
-        $this->createBreadcrumb($links, $breadcrumbs);
-        $array = [
-            'this' => 'Тесты',
-            'tests' => $manager->getRepository(Tests::class)->findAll(),
-            'size' => $size,
-            'score' => $size > 0? $manager->getRepository(TestsOfUser::class)->findBy(['User' => $manager->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUserIdentifier()])->getId()]) : "",
-            ];
-        return $this->render('tests.html.twig', $array);
-    }
-
-    #[Route('/test/{id}', name: "test")]
-    public function showTest
-    (EntityManagerInterface $manager,
-     Request $request,
-    Breadcrumbs $breadcrumbs,
-     int $id,
-    LoggerInterface $logger
-    ): Response
-    {
-        $links = ['Главная' => "/", 'Тесты' => "/test/list", 'Тест' => ""];
-        $this->createBreadcrumb($links, $breadcrumbs);
-        $test = $manager->getRepository(Tests::class)->find($id);
-        $query = $request->get('res');
-        $userAndTest = new TestsOfUser();
-        if (isset($query)) {
-            $res = $query;
-            $score = 0;
-            $allQuestions = $manager->getRepository(Questions::class)->findBy(['tests' => $id]);
-            foreach ($res as $question => $answers) {
-                foreach ($answers as $answer) {
-                    $true = $manager->getRepository(Answers::class)->find($answer)->isIsTrue();
-                    $score += $true? $answer == '1'? 1 : 0 : 0;
-                }
-            }
-            $count = 0;
-            foreach ($allQuestions as $question) {
-                $allAnswers = $manager->getRepository(Answers::class)->findBy(['questions' => $question->getId()]);
-                foreach ($allAnswers as $answer) {
-                    if ($answer->isIsTrue()) {
-                        $count++;
-                    }
-                }
-            }
-            $userAndTest->setTests($test);
-            $userAndTest->setUser($this->getUser());
-            $userAndTest->setScore(($score / $count) * 5);
-            $manager->persist($userAndTest);
-            $manager->flush();
-            return $this->redirectToRoute('tests_list');
-        }
-        $array = [
-            'this' => 'Тест',
-            'test' => $test,
-            ];
-        return $this->render('test.html.twig', $array);
-    }
-
     #[Route('/about', name: "about")]
     public function about(
         Breadcrumbs $breadcrumbs
@@ -172,17 +103,10 @@ class SiteController extends AbstractController
     {
         $links = ['Главная' => "/", 'Личный кабинет' => ""];
         $this->createBreadcrumb($links, $breadcrumbs);
-        $all = $this->manager->getRepository(Tests::class)->findAll();
         $count = 0;
-        foreach ($all as $item) {
-            $count++;
-        }
         $array = [
             'username' => $this->getUser()->getUserIdentifier(),
             'role' => $service->identifyRole(),
-            'tests' => $this->manager->getRepository(TestsOfUser::class)->count(['User' => $this->getUser()])
-                . '/' .$count,
-                $this->manager->getRepository(Tests::class)->findAll(),
             'this' => 'Личный кабинет',
             ];
         return $this->render('userCab.html.twig', $array);
